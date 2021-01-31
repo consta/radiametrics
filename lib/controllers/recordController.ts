@@ -41,4 +41,17 @@ export class RecordController {
             }
         });
     }
+
+    public get_averages(req: Request, res: Response) {
+        var minutesSince:number = req.query.since ? Number(req.query.since) : 5;
+
+        this.recordService.getAverage(minutesSince, (err: any, result: any) => {
+            if (err) {
+                mongoError(err, res);
+            }
+            else {
+                successResponse("averages", result, res);
+            }
+        })
+    }
 }

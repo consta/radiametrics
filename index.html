@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>metrics.of.by</title>
+    <script>
+        var HttpClient = function() {
+            this.get = function(aUrl, aCallback) {
+                var anHttpRequest = new XMLHttpRequest();
+                anHttpRequest.onreadystatechange = function() {
+                    if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                        aCallback(anHttpRequest.responseText);
+                }
+
+                anHttpRequest.open( "GET", aUrl, true );
+                anHttpRequest.send( null );
+            }
+        }
+        function loadAvg(minutes, id) {
+            var client = new HttpClient();
+            client.get('/api/averages?since=' + minutes, function(response) {
+                var resp = JSON.parse(response);
+                if (resp.status === 'success') {
+                    document.getElementById(id).innerHTML = toMicroRoentgenPerHour(resp.data[0].cpmAverage);
+                }
+            });
+        }
+
+        function toMicroRoentgenPerHour(n) {
+            return Math.round((n/151) * 10000.0) / 100.0;
+        }
+
+        function populate() {
+            loadAvg(5, 'id1');
+            loadAvg(60, 'id2');
+            loadAvg(720, 'id3');
+            document.getElementById('dt').innerHTML = new Date();
+        }
+    </script>
+</head>
+<body onload="populate()">
+<h1>Minsk Suharevo Radiation Doze Rate</h1>
+<p id="dt" style="font-size: 18px"></p>
+<p>Average values in recent 5 minutes, 1 hour, 12 hours, expressed in microRoentgen per hour (μR/h)</p>
+<table style="width: 400px; border: 1px;">
+    <tr style="text-align: center;">
+        <th>5 min</th>
+        <th>1 hour</th>
+        <th>12 hours</th>
+    </tr>
+    <tr style="text-align: center; font-size: 18px">
+        <td><p id="id1"></p></td>
+        <td><p id="id2"></p></td>
+        <td><p id="id3"></p></td>
+    </tr>
+</table>
+</body>
+</html>

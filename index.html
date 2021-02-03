@@ -21,6 +21,22 @@
                 if (resp.status === 'success') {
                     document.getElementById(id).innerHTML = toMicroRoentgenPerHour(resp.data[0].cpmAverage);
                 }
+                else {
+                    document.getElementById(id).innerHTML = 'error';
+                }
+            });
+        }
+
+        function recentRecordDate(elementId) {
+            var client = new HttpClient();
+            client.get('/api/records/recent', function(response) {
+                var resp = JSON.parse(response);
+                if (resp.status === 'success') {
+                    document.getElementById(elementId).innerHTML = "Last record's timestamp: " + resp.data;
+                }
+                else {
+                    document.getElementById(elementId).innerHTML = "Could not obtain last record's timestamp";
+                }
             });
         }
 
@@ -33,12 +49,14 @@
             loadAvg(60, 'id2');
             loadAvg(720, 'id3');
             document.getElementById('dt').innerHTML = new Date();
+            recentRecordDate('recentDate');
         }
     </script>
 </head>
 <body onload="populate()">
 <h1>Minsk Suharevo Radiation Doze Rate</h1>
 <p id="dt" style="font-size: 18px"></p>
+<p id="recentDate" style="font-size: 18px"></p>
 <p>Average values in recent 5 minutes, 1 hour, 12 hours, expressed in microRoentgen per hour (μR/h)</p>
 <table style="width: 400px; border: 1px;">
     <tr style="text-align: center;">

@@ -18,5 +18,9 @@ export class RecordRoutes {
         app.get('/api/averages', (req: Request, res: Response) => {
             this.controller.get_averages(req, res);
         });
+
+        app.get('/api/records/recent', (req: Request, res: Response) => {
+            this.controller.getDateOfRecentRecord(req, res);
+        });
     }
 }

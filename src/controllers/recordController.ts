@@ -54,4 +54,15 @@ export class RecordController {
             }
         })
     }
+
+    getDateOfRecentRecord(req: e.Request, res: e.Response) {
+        this.recordService.getDateOfMostRecentRecord((err:any, result: any) => {
+            if (err) {
+                mongoError(err, res);
+            }
+            else {
+                successResponse("recent-timestamp", result[0].timestamp, res);
+            }
+        })
+    }
 }

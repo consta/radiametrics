@@ -35,4 +35,8 @@ export default class RecordService {
              });
     }
 
+    public getDateOfMostRecentRecord(callback: any) {
+        records.find(callback).sort({"timestamp":-1}).limit(1);
+    }
+
 }

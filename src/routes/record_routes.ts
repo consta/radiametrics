@@ -22,5 +22,11 @@ export class RecordRoutes {
         app.get('/api/records/recent', (req: Request, res: Response) => {
             this.controller.getDateOfRecentRecord(req, res);
         });
+
+
+
+        app.post('/api/sensors/', (req: Request, res: Response) => {
+            this.controller.add_sensor_data(req, res);
+        });
     }
 }

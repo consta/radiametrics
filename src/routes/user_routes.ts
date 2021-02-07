@@ -1,6 +1,6 @@
 import { Application, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
-
+import { HandleBars } from 'express-handlebars'
 export class UserRoutes {
 
     private user_controller: UserController = new UserController();

@@ -1,0 +1,22 @@
+<h1>Sweet Home Climate Figures</h1>
+
+<p>Recent: <strong>{{model.recent.temperature}}℃, {{model.recent.humidity}}%, {{model.recent.heatIndex}}℃ </strong><br>
+(at {{model.recent.timestamp}} ) </p>
+
+<table>
+<tr>
+<th>minutes</th>
+<th>temperature</th>
+<th>humidity</th>
+<th>heatIndex</th>
+</tr>
+{{#each model.averages}}
+<tr>
+    <td>{{this.minutes}}</td>
+    <td>{{this.temperature}}</td>
+    <td>{{this.humidity}}</td>
+    <td>{{this.heatIndex}}</td>
+</tr>
+{{/each}}
+</table>
+
